@@ -1,6 +1,8 @@
 # apk-parser
 an API for parsing apk files and extract manifest information from it
 
+Article about this repository: [Writing an API with Rust to parse and extract info from Apk](https://benyaamin.com/post/writing-an-api-with-rust-to-parse-and-extract-info-from-apk/)
+
 usage is simple :)
 
 ## 1. install rust on your machine 
