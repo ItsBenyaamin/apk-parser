@@ -1,0 +1,8 @@
+[default]
+port = 5000
+workers = 16
+
+[default.limits]
+form = "25 MiB"
+data-form = "25 MiB"
+file = "25 MiB"
