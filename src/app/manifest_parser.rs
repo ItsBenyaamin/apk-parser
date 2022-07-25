@@ -1,13 +1,12 @@
 pub mod parser {
+    use rocket::form::validate::Contains;
     use std::io::Read;
     use std::path::PathBuf;
-    use rocket::form::validate::Contains;
-    use xml::EventReader;
     use xml::reader::XmlEvent;
+    use xml::EventReader;
 
     use crate::app::android_xml::axml;
     use crate::app::apk_info::ApkParsedInfo;
-
 
     pub async fn parse(path: &PathBuf) -> Option<ApkParsedInfo> {
         let file = std::fs::File::open(path).unwrap();
@@ -31,50 +30,51 @@ pub mod parser {
         let reader = EventReader::from_str(content.as_str());
         for e in reader {
             match e {
-                Ok(XmlEvent::StartElement { name, attributes, namespace: _ }) => {
-                    match name.local_name.as_str() {
-                        "manifest" => {
-                            for attribute in attributes {
-                                let attr = attribute.name.to_string();
+                Ok(XmlEvent::StartElement {
+                    name,
+                    attributes,
+                    namespace: _,
+                }) => match name.local_name.as_str() {
+                    "manifest" => {
+                        for attribute in attributes {
+                            let attr = attribute.name.to_string();
 
-                                if attr.contains("versionCode") {
-                                    apk_info.version_code = attribute.value;
-                                } else if attr.contains("versionName") {
-                                    apk_info.version_name = attribute.value;
-                                } else if attr.contains("compileSdkVersionCodename") {
-                                    apk_info.compile_sdk_version_code_name = attribute.value;
-                                } else if attr.contains("compileSdkVersion") {
-                                    apk_info.compile_sdk_version = attribute.value;
-                                } else if attr.contains("package") {
-                                    apk_info.package_name = attribute.value;
-                                }
+                            if attr.contains("versionCode") {
+                                apk_info.version_code = attribute.value;
+                            } else if attr.contains("versionName") {
+                                apk_info.version_name = attribute.value;
+                            } else if attr.contains("compileSdkVersionCodename") {
+                                apk_info.compile_sdk_version_code_name = attribute.value;
+                            } else if attr.contains("compileSdkVersion") {
+                                apk_info.compile_sdk_version = attribute.value;
+                            } else if attr.contains("package") {
+                                apk_info.package_name = attribute.value;
                             }
                         }
-
-                        "uses-sdk" => {
-                            for attribute in attributes {
-                                let attr = attribute.name.to_string();
-
-                                if attr.contains("minSdkVersion") {
-                                    apk_info.min_sdk_version = attribute.value;
-                                } else if attr.contains("targetSdkVersion") {
-                                    apk_info.target_sdk_version = attribute.value;
-                                }
-                            }
-                        }
-
-                        "uses-permission" => {
-                            for attribute in attributes {
-                                if attribute.name.to_string().contains("name") {
-                                    apk_info.permissions.push(attribute.value)
-                                }
-                            }
-                        }
-
-                        _ => {}
                     }
-                
-                }
+
+                    "uses-sdk" => {
+                        for attribute in attributes {
+                            let attr = attribute.name.to_string();
+
+                            if attr.contains("minSdkVersion") {
+                                apk_info.min_sdk_version = attribute.value;
+                            } else if attr.contains("targetSdkVersion") {
+                                apk_info.target_sdk_version = attribute.value;
+                            }
+                        }
+                    }
+
+                    "uses-permission" => {
+                        for attribute in attributes {
+                            if attribute.name.to_string().contains("name") {
+                                apk_info.permissions.push(attribute.value)
+                            }
+                        }
+                    }
+
+                    _ => {}
+                },
 
                 Err(_) => {
                     return None;
@@ -86,6 +86,4 @@ pub mod parser {
 
         Some(apk_info)
     }
-
 }
-
