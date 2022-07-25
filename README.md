@@ -1,28 +1,30 @@
-# apk-parser
-an API for parsing apk files and extract manifest information from it
+# APK Parser
 
-Article about this repository: [Writing an API with Rust to parse and extract info from Apk](https://benyaamin.com/post/writing-an-api-with-rust-to-parse-and-extract-info-from-apk/)
+It's an API for parsing apk files and extract manifest information from it. You can read more about this project at this article: [Writing an API with Rust to parse and extract info from Apk](https://benyaamin.com/post/writing-an-api-with-rust-to-parse-and-extract-info-from-apk/)
 
-usage is simple :)
+## 1. install Rust
 
-## 1. install rust on your machine 
-best document for install is own [Rust documention](https://www.rust-lang.org/tools/install)
+First, you need to install Rust. For linux users download and run rust bash file
 
-for linux users download and run rust bash file
-```
+```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
-then just add this line to your shell. for bash:
-```
+
+Then just add this line to your shell. For bash:
+
+```bash
 echo 'source $HOME/.cargo/env' >> ~/.bashrc
 ```
 
+> **Note**: Check [Rust documentation](https://www.rust-lang.org/tools/install) for more information
+
 ## 2. Run
 
-```
+```bash
+git clone https://github.com/graymind75/apk-parser.git && cd apk-parser
 cargo run
 ```
 
 ## 3. Request
-send a multipart request with a file and `apk` field name.
 
+Send a multipart request with a file and `apk` field name.

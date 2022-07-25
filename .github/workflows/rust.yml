@@ -1,0 +1,49 @@
+name: Rust
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+    paths:
+      - "src/**"
+      - ".github/workflows/rust.yml"
+      - "Cargo.toml"
+      - "Cargo.lock"
+      - "Rocket.toml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "src/**"
+      - ".github/workflows/rust.yml"
+      - "Cargo.toml"
+      - "Cargo.lock"
+      - "Rocket.toml"
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  init:
+    name: 🚩 Initialize
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cancel previous workflow
+        uses: styfle/cancel-workflow-action@0.10.0
+        with:
+          access_token: ${{ github.token }}
+
+  build:
+    name: 📦 Build
+    runs-on: ubuntu-latest
+    needs:
+      - init
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build
+        run: cargo build --verbose

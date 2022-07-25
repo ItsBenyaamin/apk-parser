@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ApkParsedInfo {
@@ -9,7 +9,7 @@ pub struct ApkParsedInfo {
     pub target_sdk_version: String,
     pub compile_sdk_version: String,
     pub compile_sdk_version_code_name: String,
-    pub permissions: Vec<String>
+    pub permissions: Vec<String>,
 }
 
 impl ApkParsedInfo {
