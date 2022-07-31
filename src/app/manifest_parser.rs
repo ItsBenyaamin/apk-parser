@@ -11,7 +11,19 @@ pub mod parser {
     pub async fn parse(path: &PathBuf) -> Option<ApkParsedInfo> {
         let file = std::fs::File::open(path).unwrap();
         let mut file_content: Vec<u8> = Vec::new();
+        let mut icon = String::new();
         let mut archive = zip::ZipArchive::new(file).unwrap();
+
+        for i in 0..archive.len() {
+            let mut in_file = archive.by_index(i).unwrap();
+            if in_file.name() == "res/drawable-xxxhdpi-v4/ic_launcher.png" {
+                let mut f_content: Vec<u8> = Vec::new();
+                in_file.read_to_end(&mut f_content).unwrap();
+                icon = base64::encode(&f_content);
+                break;
+            }
+        }
+
         for i in 0..archive.len() {
             let mut inner_file = archive.by_index(i).unwrap();
             if inner_file.name() == "AndroidManifest.xml" {
@@ -21,11 +33,13 @@ pub mod parser {
         }
 
         let xml = axml::extract_xml(file_content);
-        parse_to_info(xml)
+        parse_to_info(xml, icon)
     }
 
-    fn parse_to_info(content: String) -> Option<ApkParsedInfo> {
+    fn parse_to_info(content: String, icon: String) -> Option<ApkParsedInfo> {
         let mut apk_info = ApkParsedInfo::new();
+
+        apk_info.icon = icon;
 
         let reader = EventReader::from_str(content.as_str());
         for e in reader {
