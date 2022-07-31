@@ -10,6 +10,7 @@ pub struct ApkParsedInfo {
     pub compile_sdk_version: String,
     pub compile_sdk_version_code_name: String,
     pub permissions: Vec<String>,
+    pub icon: String,
 }
 
 impl ApkParsedInfo {
@@ -23,6 +24,7 @@ impl ApkParsedInfo {
             compile_sdk_version: "".to_owned(),
             compile_sdk_version_code_name: "".to_owned(),
             permissions: Vec::new(),
+            icon: "".to_owned(),
         }
     }
 }
