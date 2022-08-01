@@ -57,6 +57,7 @@ name = "apk-parser"
 version = "1.0.0"
 dependencies = [
  "axmldecoder",
+ "base64",
  "rocket",
  "serde",
  "serde_json",
