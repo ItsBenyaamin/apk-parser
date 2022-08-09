@@ -11,6 +11,6 @@ rocket = "0.5.0-rc.2"
 zip = "0.6.2"
 axmldecoder = "0.4.0"
 xml-rs = "0.8"
-serde = { version = "1.0.140", features = ["derive"] }
+serde = { version = "1.0.142", features = ["derive"] }
 serde_json = "1.0"
 base64 = "0.13.0"
