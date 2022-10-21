@@ -1,0 +1,12 @@
+{
+  "name": "apk-parser-wasm",
+  "version": "0.1.0",
+  "files": [
+    "apk_parser_wasm_bg.wasm",
+    "apk_parser_wasm.js",
+    "apk_parser_wasm.d.ts"
+  ],
+  "module": "apk_parser_wasm.js",
+  "types": "apk_parser_wasm.d.ts",
+  "sideEffects": false
+}
